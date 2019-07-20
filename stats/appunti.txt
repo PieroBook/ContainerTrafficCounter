@@ -1,18 +1,1 @@
-
- microk8s.kubectl exec traffic-generator --namespace=default cat /sys/class/net/eth0/iflink 2>/dev/null
-'wget https://github.com/opendns/public-domain-lists/edit/master/opendns-top-domains.txt -O website.txt -o /dev/null;
-              while read p; do ping -c 1 $p; sleep 200; done < website.txt']
-
-microk8s.kubectl exec -it traffic-generator-866cff5bc8-5fvh8 --namespace=default cat /sys/class/net/eth0/iflink
-
-
-Recupero un lista da microk8s.kubectl get pod 
-estraggo solo le entry con traffic-generator-*
-per ogni entry eseguo 
-microk8s.kubectl exec -it traffic-generator-* --namespace=default cat /sys/class/net/eth0/iflink
-in mdoo da recuperare il numero interfaccia
-da quello scorrendo tutte le veth in /sys/class/net/veth******/iflink confrontando iflink posso ottenere la veth
-
-con ifconfig | awk veth***** posso ottenere i byte letti scritti
-ifconfig | awk '/vethf2f7a0b4/,/collisions/'
-cat /proc/net/dev | grep vethf2f7a0b4
+.
