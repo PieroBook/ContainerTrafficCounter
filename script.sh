@@ -1,5 +1,5 @@
 #!/bin/bash
-# Funzione help utilizzo script
+# Help function
 function help { 
 	echo "---------------------------HELP---------------------------"
 	echo "COMMAND   : $0 ip label"
@@ -32,7 +32,7 @@ then
 	help;
 	exit;
 fi;
-if valid_ip $1; then echo "IP OK"; else echo "IP NON VALIDO";exit; fi;
+if ! valid_ip $1; then echo "IP NON VALIDO";exit; fi;
 # Imposto label container stats
 pod_label=$2;
 # Recupero informazioni pod in esecuzione
@@ -40,14 +40,11 @@ cmd=`microk8s.kubectl get pods --field-selector=status.phase=Running | grep "Run
 lista=$cmd;
 unixTimeStamp=$(date +%s);
 # Se lista vuota esco
-while [ ${#lista} == 0 ]
-do
-	echo "Nessun pod attivo, sleep 5 secondi!";
-	sleep 5;
-	cmd=`microk8s.kubectl get pods --field-selector=status.phase=Running | grep "Running"`
-	lista=$cmd;
-	unixTimeStamp=$(date +%s);
-done;
+if [ ${#lista} == 0 ]
+then
+	echo "Nessun pod attivo, chiusura app";
+	exit;
+fi;
 #stats_filename=$(echo 'stats/stat_'${unixTimeStamp}'.txt');
 stats_filename='/dev/null';
 # Recupero lista di interfacce veth nel sistema host
@@ -93,9 +90,9 @@ do
 		pod=$(echo $nome_pod | cut -d'-' -f 2)
 		replica=$(echo $nome_pod | cut -d'-' -f 3)
 		echo $container $pod $replica $interfaccia $rx $tx;
-		echo $interfaccia $byte_rx $byte_tx $pkt_rx $pkt_tx;
 		# Invio dati su influx
-		echo `curl -i -XPOST 'http://'$1':8086/write?db=monitoring' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx` >> /dev/null;
+		ris=$(curl -s -i -XPOST 'http://'$1':8086/write?db=monitoring' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx > /dev/null);
+		#echo '$(curl -i -XPOST 'http://'$1':8086/write?db=monitoring' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx)' >> /dev/null;
 		echo "";
 		# STAMPA SU JSON DELLE STATISTICHE
 		#if [ $contatore -gt 1 ]

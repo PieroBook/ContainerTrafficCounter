@@ -7,7 +7,7 @@
 # INIZIALIZZAZIONE MICROK8S 
 sudo microk8s.start
 microk8s.enable dns dashboard
-echo "Attendo 35 secondi che influx e grafana siano partiti";
+echo "Attendo 35 secondi affinche influx e grafana siano partiti";
 sleep 35;
 # Recupero ip influx db
 ricerca=`kubectl get services --all-namespaces | grep "influx"`;
