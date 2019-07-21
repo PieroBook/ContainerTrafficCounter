@@ -41,8 +41,8 @@ sleep 5;
 # Avvio script
 watch -n 1 ./script.sh ${ipinflux} traffic
 # Cancellazione deploy
-microk8s.kubectl delete deployment downloadtraffic
-microk8s.kubectl delete deployment nslookuptraffic
+microk8s.kubectl delete deployment downloadtraffic1
+microk8s.kubectl delete deployment downloadtraffic2
 microk8s.kubectl delete deployment pingtraffic
 # Terminazione
 sudo microk8s.stop
