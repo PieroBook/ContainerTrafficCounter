@@ -102,6 +102,10 @@
                       "packet_rx"
                     ],
                     "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "difference"
                   }
                 ]
               ],
@@ -127,7 +131,7 @@
           },
           "yaxes": [
             {
-              "format": "none",
+              "format": "pps",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -198,6 +202,10 @@
                       "packet_tx"
                     ],
                     "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "difference"
                   }
                 ]
               ],
@@ -223,7 +231,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "pps",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -306,6 +314,10 @@
                       "byte_tx"
                     ],
                     "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "difference"
                   }
                 ]
               ],
@@ -331,7 +343,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "Bps",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -402,6 +414,10 @@
                       "byte_rx"
                     ],
                     "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "difference"
                   }
                 ]
               ],
@@ -427,7 +443,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "Bps",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -505,8 +521,8 @@
     ]
   },
   "time": {
-    "from": "2019-07-20T17:40:00.000Z",
-    "to": "2019-07-20T18:20:00.000Z"
+    "from": "2019-07-21T06:37:00.000Z",
+    "to": "2019-07-21T06:45:00.000Z"
   },
   "timepicker": {
     "now": true,
@@ -536,5 +552,5 @@
   },
   "timezone": "browser",
   "title": "Network Stats",
-  "version": 12
+  "version": 2
 }

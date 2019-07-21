@@ -78,8 +78,6 @@ do
 		rx=`ifconfig | awk '/'$interfaccia'/,/collisions/' | grep "RX" | grep ")"`
 		# stats rx
 		tx=`ifconfig | awk '/'$interfaccia'/,/collisions/' | grep "TX" | grep ")"`
-		#linea di info
-		#infoline=`cat /proc/net/dev | grep $interfaccia `
 		# separazione info rx e tx
 		byte_rx=$(echo $rx | cut -d' ' -f 5);
 		pkt_rx=$(echo $rx | cut -d' ' -f 3);
@@ -91,8 +89,7 @@ do
 		replica=$(echo $nome_pod | cut -d'-' -f 3)
 		echo $container $pod $replica $interfaccia $rx $tx;
 		# Invio dati su influx
-		ris=$(curl -s -i -XPOST 'http://'$1':8086/write?db=monitoring' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx > /dev/null);
-		#echo '$(curl -i -XPOST 'http://'$1':8086/write?db=monitoring' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx)' >> /dev/null;
+		ris=$(curl -s -i -XPOST 'http://'$1':8086/write?db=k8s' --data-binary 'traffic,container='$container',pod='$pod',replica='$replica',interface='$interfaccia' byte_tx='$byte_tx',packet_tx='$pkt_tx',byte_rx='$byte_rx',packet_rx='$pkt_rx > /dev/null);
 		echo "";
 		# STAMPA SU JSON DELLE STATISTICHE
 		#if [ $contatore -gt 1 ]
@@ -116,5 +113,5 @@ do
 		#let "contatore+=1";
 	fi;
 done
-echo "}" >> $stats_filename;
-echo "}" >> $stats_filename;
+#echo "}" >> $stats_filename;
+#echo "}" >> $stats_filename;

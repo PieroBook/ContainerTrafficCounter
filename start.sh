@@ -28,8 +28,6 @@ do
 	let "count+=1";	
 done;
 echo "IP influx DB" $ipinflux;
-# Creo db influx
-curl -POST http://$ipinflux:8086/query --data-urlencode "q=CREATE DATABASE monitoring"
 # Apertura browser web consultazione grafana
 xdg-open https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/monitoring-grafana/proxy
 # Attesa creazione DB in caso non esistente
